@@ -391,7 +391,7 @@ def prune_model(param_name, save_folder, extra_train_steps, prune_frac):
         init_mean_train = posterior_train['init_mean']
         init_cov_train = posterior_train['init_cov']
 
-        model_irms_base = lgssmu.calculate_irms(model_base, window=window)
+        model_irms_base = lgssmu.calculate_stams(model_base, window=window)
         model_base_score = met.nan_corr(data_irms, model_irms_base)[0]
 
         prune_folder_str = 'pruning_es' + f'{int(extra_train_steps):03d}' + '_pf' + f'{int(prune_frac * 100):03d}'
@@ -477,7 +477,7 @@ def prune_model(param_name, save_folder, extra_train_steps, prune_frac):
 
         if cpu_id == 0:
             # get the predicted IRFs from the model and compare them to the data
-            model_irms = lgssmu.calculate_irms(model_dict['model'], window=window, verbose=False)
+            model_irms = lgssmu.calculate_stams(model_dict['model'], window=window, verbose=False)
             model_score = met.nan_corr(data_irms, model_irms)[0]
 
             error_frac = model_score / model_base_score

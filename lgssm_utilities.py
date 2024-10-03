@@ -178,7 +178,7 @@ def calculate_irfs(model, rng=np.random.default_rng(), window=(15, 30), verbose=
     return irfs
 
 
-def calculate_irms(model, rng=np.random.default_rng(), window=(15, 30), verbose=False):
+def calculate_stams(model, rng=np.random.default_rng(), window=(15, 30), verbose=False):
     irfs = calculate_irfs(model, rng=rng, window=window, verbose=verbose)
     irms = np.sum(irfs[window[0]:, :, :], axis=0) / model.sample_rate
 

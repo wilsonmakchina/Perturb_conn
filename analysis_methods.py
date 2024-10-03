@@ -192,7 +192,7 @@ def plot_model_params(model, model_true=None, cell_ids_chosen=None):
         A_true = [None for i in range(len(A))]
 
     for i in range(len(A)):
-        plot_matrix(A[i], A_true[i], labels_x=cell_ids_chosen, labels_y=cell_ids_chosen, abs_max=abs_max, title='A')
+        plot_matrix(A[i], A_true[i], labels_x=cell_ids_chosen, labels_y=cell_ids_chosen, abs_max=abs_max, title='dynamics matrix')
 
     # plot the dynamics weights eigenvalues
     eigvals_trained, eigvects_trained = np.linalg.eig(model_params['trained']['dynamics_weights'])
@@ -233,7 +233,7 @@ def plot_model_params(model, model_true=None, cell_ids_chosen=None):
     else:
         B_true = None
 
-    plot_matrix(B, B_true, labels_y=cell_ids_chosen, title='B')
+    plot_matrix(B, B_true, labels_y=cell_ids_chosen, title='dynamics inputs (diagonal)')
 
     # plot the C matrix
     C_full = model_params['trained']['emissions_weights']
@@ -249,7 +249,7 @@ def plot_model_params(model, model_true=None, cell_ids_chosen=None):
     else:
         C_true = None
 
-    plot_matrix(C, C_true, labels_y=cell_ids_chosen, title='C')
+    plot_matrix(C, C_true, labels_y=cell_ids_chosen, title='emissions weights')
 
     # Plot the Q matrix
     Q = model_params['trained']['dynamics_cov'][:model.dynamics_dim, :model.dynamics_dim]
@@ -261,7 +261,7 @@ def plot_model_params(model, model_true=None, cell_ids_chosen=None):
     else:
         Q_true = None
 
-    plot_matrix(Q, Q_true, labels_x=cell_ids_chosen, labels_y=cell_ids_chosen, title='Q')
+    plot_matrix(Q, Q_true, labels_x=cell_ids_chosen, labels_y=cell_ids_chosen, title='dynamics covariance')
 
     # Plot the R matrix
     R = model_params['trained']['emissions_cov']
@@ -273,7 +273,7 @@ def plot_model_params(model, model_true=None, cell_ids_chosen=None):
     else:
         R_true = None
 
-    plot_matrix(R, R_true, labels_x=cell_ids_chosen, labels_y=cell_ids_chosen, title='R')
+    plot_matrix(R, R_true, labels_x=cell_ids_chosen, labels_y=cell_ids_chosen, title='emissions covariance')
 
     plt.show()
 
@@ -292,7 +292,7 @@ def plot_matrix(param_trained, param_true=None, labels_x=None, labels_y=None, ab
     if param_true is not None:
         plt.subplot(2, 2, 1)
     plt.imshow(param_trained, interpolation='Nearest', cmap=colormap)
-    plt.title('fit weights')
+    plt.title('fit weights, ' + title)
     plt.xlabel('input neurons')
     plt.ylabel('output neurons')
     plt.colorbar()

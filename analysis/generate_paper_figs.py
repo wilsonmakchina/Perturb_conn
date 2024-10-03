@@ -388,8 +388,8 @@ pairs = np.array([['RMDDR', 'RMDDL'],
 # pf.compare_model_irms(weights, masks, 'corr', fig_save_path=fig_save_path/'fig_3')
 
 # Figure 4
-# pf.plot_missing_neuron(models, data_test, posterior_dicts['synap'], post_save_path=(saved_run_folder / model_folders['synap'] / 'posterior_test.pkl'),
-#                        sample_rate=sample_rate, fig_save_path=fig_save_path/'fig_4')
+pf.plot_missing_neuron(models, data_test, posterior_dicts['synap'], post_save_path=(saved_run_folder / model_folders['synap'] / 'posterior_test.pkl'),
+                       sample_rate=sample_rate, fig_save_path=fig_save_path/'fig_4')
 
 
 # supplemental
@@ -401,4 +401,4 @@ pairs = np.array([['RMDDR', 'RMDDL'],
 # pf.plot_irms(weights, cell_ids, num_neurons=None, fig_save_path=fig_save_path/'fig_s3')
 
 # fig_s4
-pf.weight_prediction_direct_vs_poly(weights_masked, masks, cell_ids, weight_name='irms', fig_save_path=fig_save_path/'fig_s4')
+# pf.weight_prediction_direct_vs_poly(weights_masked, masks, cell_ids, weight_name='irms', fig_save_path=fig_save_path/'fig_s4')
