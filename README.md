@@ -4,11 +4,13 @@ https://doi.org/10.1101/2024.09.22.614271
 Codebase for fitting and analyzing dynamical models from the paper
 
 ### Installation:
-Navigate to the python project directory
-```
-git clone https://github.com/Nondairy-Creamer/Creamer_LDS_2024
-pip install -e .
-```
+Clone the project
+
+```git clone https://github.com/Nondairy-Creamer/Creamer_LDS_2024```
+
+Set up your python environment with pip. Within that environment run
+
+```pip install -e .```
 
 ### Usage
 The files in the quick_start_examples folder will show you how to load the models from the paper and use the models to predict STAMs, correlations, and reconstruct missing neurons.
