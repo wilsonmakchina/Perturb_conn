@@ -6,8 +6,7 @@ Codebase for fitting and analyzing dynamical models from the paper
 ### Installation:
 Navigate to the python project directory
 ```
-git clone https://github.com/Nondairy-Creamer/tmac
-cd tmac
+git clone https://github.com/Nondairy-Creamer/Creamer_LDS_2024
 pip install -e .
 ```
 
