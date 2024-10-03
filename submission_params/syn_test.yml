@@ -1,0 +1,43 @@
+fit_file: 'fit_synthetic'
+
+# data parameters
+num_data_sets: 1  # can generate multiple data sets to mimic multiple recordings
+num_time: 1000  # number of time steps per data set
+num_train_steps: 100  # steps of EM when fitting the model
+dynamics_dim: 5  # size of the latent dynamics dimension
+emissions_dim: 5  # size of the emissions dimension
+input_dim: 5  # size of the input dimension
+scattered_nan_freq: 0.0  # measurements will be nan at this frequency
+lost_emission_freq: 0.0  # a neurons entire trajectory will be missing from a recording at this freuqnecy
+dynamics_lags: 1  # creates a higher order AR model so that the dynamics depend on multiple time steps in the past
+dynamics_input_lags: 10  # allows inputs to affect dynamics X steps into the future
+emissions_input_lags: 1  # allows inputs to affect emissions X steps into the future
+ridge_lambda: Null  # allows regularization of the dynamics weights. Is the lambda parameter in log space so -2 -> 0.01
+input_time_scale: 0  # can generate inputs that are sparse rather than dense
+use_memmap: False  # conserves memory by storing large matricies on the harddrive rather than RAM. slows computation
+
+# initialize a linear gaussian ssm model
+param_props:
+  update: # if you want the EM updates to update a parameter or keep it fixed
+    dynamics_weights: True
+    dynamics_input_weights: True
+    dynamics_cov: True
+    emissions_weights: False
+    emissions_input_weights: False
+    emissions_cov: True
+
+  shape:
+    # some parameters can have special structure, such as diagonal
+    dynamics_weights: 'synaptic'  # options are (full, anatomical, synaptic, not_synaptic). see ssm_classes.py
+    dynamics_input_weights: 'diag'  # options are (full, diag)
+    emissions_weights: 'full'  # options are (full)
+    dynamics_cov: 'diag'  # options are (full, diag)
+    emissions_cov: 'diag'  # options are (full, diag)
+
+# training parameters
+# choices are: gradient_descent and batch_sgd
+verbose: True  # outputs the training iteration and log-likelihood
+random_seed: 0  # uses this random seed for generating the data
+
+plot_figures: True  # plot figures at end of fitting to show agreement
+model_save_folder: trained_models  # where to save the trained models
