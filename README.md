@@ -12,6 +12,8 @@ Set up your python environment with pip. Within that environment run
 
 ```pip install -e .```
 
+All requirements are listed in the setup.py file if you want to install them manually
+
 ### Usage
 The files in the quick_start_examples folder will show you how to load the models from the paper and use the models to predict STAMs, correlations, and reconstruct missing neurons.
 
