@@ -17,4 +17,4 @@ All requirements are listed in the setup.py file if you want to install them man
 ### Usage
 The files in the quick_start_examples folder will show you how to load the models from the paper and use the models to predict STAMs, correlations, and reconstruct missing neurons.
 
-If you would like to train a model on synthetic data, simply run main.txt. To see the available parameters for fitting and generating synethic data look at submission_params/synthetic_test.txt
+If you would like to train a model on synthetic data, simply run main.txt. To see the available parameters for fitting and generating synethic data look at submission_params/syn_test.txt
