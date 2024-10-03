@@ -2,9 +2,9 @@ import numpy as np
 from pathlib import Path
 import yaml
 import pickle
-import tmac.preprocessing as tp
-import analysis_utilities as au
-import warnings
+# import tmac.preprocessing as tp
+# import analysis_utilities as au
+# import warnings
 import os
 
 
@@ -19,79 +19,79 @@ def get_run_params(param_name):
     return params
 
 
-def preprocess_data(emissions, inputs, start_index=0, correct_photobleach=False, filter_size=2, upsample_factor=1):
-    # remove the beginning of the recording which contains artifacts and mean subtract
-    emissions = emissions[start_index:, :]
-    inputs = inputs[start_index:, :]
-
-    # remove stimulation events with interpolation
-    window = np.array((-2, 3))
-    for c in range(emissions.shape[1]):
-        stim_locations = np.where(inputs[:, c])[0]
-
-        for s in stim_locations:
-            data_x = window + s
-            interp_x = np.arange(data_x[0], data_x[1])
-            emissions[interp_x, c] = np.interp(interp_x, data_x, emissions[data_x, c])
-
-    if filter_size > 0:
-        # filter out noise at the nyquist frequency
-        filter_shape = np.ones(filter_size) / filter_size
-        emissions_filtered = np.zeros((emissions.shape[0] - filter_size + 1, emissions.shape[1]))
-
-        for c in range(emissions.shape[1]):
-            emissions_filtered[:, c] = au.nan_convolve(emissions[:, c].copy(), filter_shape)
-    else:
-        emissions_filtered = emissions.copy()
-
-    if correct_photobleach:
-        # photobleach correction
-        emissions_filtered_corrected = np.zeros_like(emissions_filtered)
-        for c in range(emissions_filtered.shape[1]):
-            emissions_filtered_corrected[:, c] = tp.photobleach_correction(emissions_filtered[:, c], num_exp=2, fit_offset=False)[:, 0]
-
-        # occasionally the fit fails check for outputs who don't have a mean close to 1
-        # fit those with a single exponential
-        # all the nan mean calls throw warnings when averaging over nans so supress those
-        with warnings.catch_warnings():
-            warnings.simplefilter("ignore", category=RuntimeWarning)
-            bad_fits_2exp = np.where(np.abs(np.nanmean(emissions_filtered_corrected, axis=0) - 1) > 0.1)[0]
-
-            for bf in bad_fits_2exp:
-                emissions_filtered_corrected[:, bf] = tp.photobleach_correction(emissions_filtered[:, bf], num_exp=1, fit_offset=True)[:, 0]
-
-            bad_fits_1xp = np.where(np.abs(np.nanmean(emissions_filtered_corrected, axis=0) - 1) > 0.2)[0]
-            if len(bad_fits_1xp) > 0:
-                warnings.warn('Photobleach correction problems found in neurons ' + str(bad_fits_1xp) + ' setting to nan')
-                emissions_filtered_corrected[:, bad_fits_1xp] = np.nan
-
-            # divide by the mean and subtract 1. Will throw warnings on the all nan data, ignore them
-            emissions_time_mean = np.nanmean(emissions_filtered_corrected, axis=0)
-            emissions_filtered_corrected = emissions_filtered_corrected / emissions_time_mean - 1
-
-        emissions_filtered_corrected[emissions_filtered_corrected > 5] = np.nan
-
-    else:
-        emissions_filtered_corrected = emissions_filtered
-        emissions_mean = np.nanmean(emissions_filtered_corrected, axis=0)
-        emissions_std = np.nanstd(emissions_filtered_corrected, axis=0)
-        emissions_filtered_corrected = (emissions_filtered_corrected - emissions_mean) / emissions_std
-
-    # truncate inputs to match emissions after filtering
-    inputs = inputs[:emissions_filtered_corrected.shape[0], :]
-
-    if upsample_factor != 1:
-        emissions_out = np.empty((emissions_filtered_corrected.shape[0] * upsample_factor, emissions_filtered_corrected.shape[1]))
-        emissions_out[:] = np.nan
-        emissions_out[::upsample_factor, :] = emissions_filtered_corrected
-
-        inputs_out = np.zeros((inputs.shape[0] * upsample_factor, inputs.shape[1]))
-        inputs_out[::upsample_factor, :] = inputs
-    else:
-        emissions_out = emissions_filtered_corrected
-        inputs_out = inputs
-
-    return emissions_out, inputs_out
+# def preprocess_data(emissions, inputs, start_index=0, correct_photobleach=False, filter_size=2, upsample_factor=1):
+#     # remove the beginning of the recording which contains artifacts and mean subtract
+#     emissions = emissions[start_index:, :]
+#     inputs = inputs[start_index:, :]
+#
+#     # remove stimulation events with interpolation
+#     window = np.array((-2, 3))
+#     for c in range(emissions.shape[1]):
+#         stim_locations = np.where(inputs[:, c])[0]
+#
+#         for s in stim_locations:
+#             data_x = window + s
+#             interp_x = np.arange(data_x[0], data_x[1])
+#             emissions[interp_x, c] = np.interp(interp_x, data_x, emissions[data_x, c])
+#
+#     if filter_size > 0:
+#         # filter out noise at the nyquist frequency
+#         filter_shape = np.ones(filter_size) / filter_size
+#         emissions_filtered = np.zeros((emissions.shape[0] - filter_size + 1, emissions.shape[1]))
+#
+#         for c in range(emissions.shape[1]):
+#             emissions_filtered[:, c] = au.nan_convolve(emissions[:, c].copy(), filter_shape)
+#     else:
+#         emissions_filtered = emissions.copy()
+#
+#     if correct_photobleach:
+#         # photobleach correction
+#         emissions_filtered_corrected = np.zeros_like(emissions_filtered)
+#         for c in range(emissions_filtered.shape[1]):
+#             emissions_filtered_corrected[:, c] = tp.photobleach_correction(emissions_filtered[:, c], num_exp=2, fit_offset=False)[:, 0]
+#
+#         # occasionally the fit fails check for outputs who don't have a mean close to 1
+#         # fit those with a single exponential
+#         # all the nan mean calls throw warnings when averaging over nans so supress those
+#         with warnings.catch_warnings():
+#             warnings.simplefilter("ignore", category=RuntimeWarning)
+#             bad_fits_2exp = np.where(np.abs(np.nanmean(emissions_filtered_corrected, axis=0) - 1) > 0.1)[0]
+#
+#             for bf in bad_fits_2exp:
+#                 emissions_filtered_corrected[:, bf] = tp.photobleach_correction(emissions_filtered[:, bf], num_exp=1, fit_offset=True)[:, 0]
+#
+#             bad_fits_1xp = np.where(np.abs(np.nanmean(emissions_filtered_corrected, axis=0) - 1) > 0.2)[0]
+#             if len(bad_fits_1xp) > 0:
+#                 warnings.warn('Photobleach correction problems found in neurons ' + str(bad_fits_1xp) + ' setting to nan')
+#                 emissions_filtered_corrected[:, bad_fits_1xp] = np.nan
+#
+#             # divide by the mean and subtract 1. Will throw warnings on the all nan data, ignore them
+#             emissions_time_mean = np.nanmean(emissions_filtered_corrected, axis=0)
+#             emissions_filtered_corrected = emissions_filtered_corrected / emissions_time_mean - 1
+#
+#         emissions_filtered_corrected[emissions_filtered_corrected > 5] = np.nan
+#
+#     else:
+#         emissions_filtered_corrected = emissions_filtered
+#         emissions_mean = np.nanmean(emissions_filtered_corrected, axis=0)
+#         emissions_std = np.nanstd(emissions_filtered_corrected, axis=0)
+#         emissions_filtered_corrected = (emissions_filtered_corrected - emissions_mean) / emissions_std
+#
+#     # truncate inputs to match emissions after filtering
+#     inputs = inputs[:emissions_filtered_corrected.shape[0], :]
+#
+#     if upsample_factor != 1:
+#         emissions_out = np.empty((emissions_filtered_corrected.shape[0] * upsample_factor, emissions_filtered_corrected.shape[1]))
+#         emissions_out[:] = np.nan
+#         emissions_out[::upsample_factor, :] = emissions_filtered_corrected
+#
+#         inputs_out = np.zeros((inputs.shape[0] * upsample_factor, inputs.shape[1]))
+#         inputs_out[::upsample_factor, :] = inputs
+#     else:
+#         emissions_out = emissions_filtered_corrected
+#         inputs_out = inputs
+#
+#     return emissions_out, inputs_out
 
 
 def load_data(data_path, num_data_sets=None, neuron_freq=0.0, held_out_data=[],

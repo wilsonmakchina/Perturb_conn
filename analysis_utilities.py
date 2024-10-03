@@ -1,5 +1,5 @@
 import numpy as np
-import wormneuroatlas as wa
+# import wormneuroatlas as wa
 import pickle
 from pathlib import Path
 import metrics as met
@@ -144,21 +144,21 @@ def load_synapse_size(cell_ids):
     return synapse_size
 
 
-def get_anatomical_data(cell_ids):
-    # load in anatomical data
-    watlas = wa.NeuroAtlas()
-    atlas_ids = list(watlas.neuron_ids)
-    chemical_connectome_full = watlas.get_chemical_synapses()
-    gap_junction_connectome_full = watlas.get_gap_junctions()
-    peptide_connectome_full = watlas.get_peptidergic_connectome()
-    atlas_ids[atlas_ids.index('AWCON')] = 'AWCR'
-    atlas_ids[atlas_ids.index('AWCOFF')] = 'AWCL'
-    atlas_inds = [atlas_ids.index(i) for i in cell_ids]
-    chem_conn = chemical_connectome_full[np.ix_(atlas_inds, atlas_inds)]
-    gap_conn = gap_junction_connectome_full[np.ix_(atlas_inds, atlas_inds)]
-    pep_conn = peptide_connectome_full[np.ix_(atlas_inds, atlas_inds)]
-
-    return chem_conn, gap_conn, pep_conn
+# def get_anatomical_data(cell_ids):
+#     # load in anatomical data
+#     watlas = wa.NeuroAtlas()
+#     atlas_ids = list(watlas.neuron_ids)
+#     chemical_connectome_full = watlas.get_chemical_synapses()
+#     gap_junction_connectome_full = watlas.get_gap_junctions()
+#     peptide_connectome_full = watlas.get_peptidergic_connectome()
+#     atlas_ids[atlas_ids.index('AWCON')] = 'AWCR'
+#     atlas_ids[atlas_ids.index('AWCOFF')] = 'AWCL'
+#     atlas_inds = [atlas_ids.index(i) for i in cell_ids]
+#     chem_conn = chemical_connectome_full[np.ix_(atlas_inds, atlas_inds)]
+#     gap_conn = gap_junction_connectome_full[np.ix_(atlas_inds, atlas_inds)]
+#     pep_conn = peptide_connectome_full[np.ix_(atlas_inds, atlas_inds)]
+#
+#     return chem_conn, gap_conn, pep_conn
 
 
 def interleave(a, b):
