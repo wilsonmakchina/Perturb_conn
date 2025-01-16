@@ -46,7 +46,7 @@ for mm in measured_metric:
 model_pred = {}
 for m in models:
     model_pred[m] = {'stams': ssmu.calculate_stams(models[m], window=window),
-                           'corr': ssmu.predict_model_corr_coef(models[m])}
+                     'corr': ssmu.predict_model_corr_coef(models[m])}
     model_pred[m]['stams'][diagonal_mask] = np.nan
     model_pred[m]['corr'][diagonal_mask] = np.nan
 
