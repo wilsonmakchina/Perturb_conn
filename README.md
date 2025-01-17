@@ -26,9 +26,9 @@ Download the data from here: https://osf.io/qxhjd/
 unzip the folder and place it somewhere convenient
 
 modify submission_params/create_data_set.yml and change data_path: to the path of the saved data
+
 run
-```python create_data_set.yml```
-direct submission parameters to reference this data folder
+```python create_data_set.py```
 
 ### Fitting locally (est time ~40 hours)
 Take a look at submission_params/exp_test.yml. You can use this file to set the parameters of the model and the size of the data set. You can either edit exp_test or make a new .yml file with your own parameters.
