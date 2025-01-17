@@ -1,0 +1,14 @@
+Metadata-Version: 2.1
+Name: Creamer-LDS-2024
+Version: 0.1.0
+Summary: Companion code for https://doi.org/10.1101/2024.09.22.614271
+Author: Matthew S. Creamer
+Author-email: matthew.s.creamer@gmail.com
+Keywords: python,calcium,ssm,linear,dynamical,system,lds
+Classifier: Programming Language :: Python :: 3
+Requires-Dist: numpy
+Requires-Dist: matplotlib
+Requires-Dist: scipy
+Requires-Dist: mpi4py
+Requires-Dist: PyYAML
+Requires-Dist: simple-slurm

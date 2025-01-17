@@ -1,7 +1,6 @@
 fit_file: fit_experimental
 
-#data_path: '/home/mcreamer/Documents/data_sets/fun_con/unfiltered_nointerp_cbleach'
-data_path: '/home/mcreamer/Documents/data_sets/fun_con/2025_creamer_lds'
+data_path: <path_to_data>
 num_data_sets: 10
 num_train_steps: 10
 dynamics_lags: 1
@@ -11,7 +10,7 @@ ridge_lambda: Null
 neuron_freq: 0.1
 
 permute_mask: False
-randomize_weights: True
+randomize_weights: False
 random_seed: 0
 
 fit_type: em
