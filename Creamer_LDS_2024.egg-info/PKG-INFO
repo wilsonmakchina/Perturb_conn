@@ -1,5 +1,5 @@
-Metadata-Version: 2.1
-Name: Creamer-LDS-2024
+Metadata-Version: 2.2
+Name: Creamer_LDS_2024
 Version: 0.1.0
 Summary: Companion code for https://doi.org/10.1101/2024.09.22.614271
 Author: Matthew S. Creamer
@@ -12,3 +12,9 @@ Requires-Dist: scipy
 Requires-Dist: mpi4py
 Requires-Dist: PyYAML
 Requires-Dist: simple-slurm
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: keywords
+Dynamic: requires-dist
+Dynamic: summary

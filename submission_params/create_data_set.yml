@@ -1,6 +1,6 @@
 fit_file: fit_experimental
 
-data_path: <path_to_data>
+data_path: /home/wmai/Perturb_conn/preprocessed_data_creamer/2025_creamer_lds
 
 # the calcium dynamics always look strange at the start of a recording, possibly due to the laser being turned on
 # cut out the first minute to let the system equilibrate

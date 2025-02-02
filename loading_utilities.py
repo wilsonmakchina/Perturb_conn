@@ -364,8 +364,7 @@ def save_run(save_folder, model_trained=None, model_true=None, ep=None, **vars_t
 
     # save the trained model
     if model_trained is not None:
-        if not model_save_folder.exists():
-            os.mkdir(model_save_folder)
+        os.makedirs(model_save_folder, exist_ok=True)
 
         if ep is not None:
             trained_model_save_path = model_save_folder / ('model_trained_' + str(ep) + '.pkl')
@@ -376,8 +375,7 @@ def save_run(save_folder, model_trained=None, model_true=None, ep=None, **vars_t
 
     # save the true model, if it exists
     if model_true is not None:
-        if not model_save_folder.exists():
-            os.mkdir(model_save_folder)
+        os.makedirs(model_save_folder, exist_ok=True)
 
         true_model_save_path = model_save_folder / 'model_true.pkl'
         model_true.save(path=true_model_save_path)

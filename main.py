@@ -66,10 +66,8 @@ def main(param_name, folder_name=None, extra_train_steps=None, prune_frac=None):
             slurm_fit = Slurm(**run_params['slurm'], output=slurm_output_path, job_name=job_name)
             cpus_per_task = run_params['slurm']['cpus_per_task']
 
-            run_command = ['module purge',
-                           'module load anaconda3/2022.10',
-                           'module load openmpi/gcc/4.1.2',
-                           'conda activate fast-mpi4py',
+            run_command = ['source "$(conda info --base)/etc/profile.d/conda.sh"',
+                           'conda activate Perturb_conn',
                            'export MKL_NUM_THREADS=' + str(cpus_per_task),
                            'export OPENBLAS_NUM_THREADS=' + str(cpus_per_task),
                            'export OMP_NUM_THREADS=' + str(cpus_per_task),

@@ -6,6 +6,7 @@ import pickle
 
 run_params = lu.get_run_params(param_name='submission_params/create_data_set.yml')
 data_path = Path(run_params['data_path'])
+print('Data path:', data_path)
 start_index = run_params['start_index']
 filter_size = run_params['filter_size']
 correct_photobleach = run_params['correct_photobleach']
@@ -74,4 +75,5 @@ for i in sorted(data_path.rglob('neural_data.txt'))[::-1]:
 
     print('Data set', i.parent, 'preprocessed')
     print('Took', time.time() - start, 's')
+print('All data sets preprocessed')
 
