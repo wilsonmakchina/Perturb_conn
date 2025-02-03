@@ -1,10 +1,10 @@
 fit_file: fit_experimental
 
-data_path: <path_to_data>
-num_data_sets: 10
+data_path: /home/wmai/Perturb_conn/preprocessed_data_creamer/2025_creamer_lds
+num_data_sets: 80
 num_train_steps: 10
 dynamics_lags: 1
-dynamics_input_lags: 1
+dynamics_input_lags: 45
 emissions_input_lags: 1
 ridge_lambda: Null
 neuron_freq: 0.1
@@ -18,17 +18,18 @@ verbose: True
 use_memmap: False
 
 hold_out: 'worm'
-held_out_data: ['pumpprobe_20210825_150349',
-                'pumpprobe_20210827_115857',
-                'pumpprobe_20211206_165435',
-                'pumpprobe_20220124_163157',
-                'pumpprobe_20220331_114306',
-                'pumpprobe_20220405_110704',
-                'pumpprobe_20220929_151408',
-                'pumpprobe_20230222_165630',
-                'pumpprobe_20230304_112842',
-                'pumpprobe_20230317_174524',
-                ]
+held_out_data: [] # allows you to specify specific data sets to hold out
+# held_out_data: ['pumpprobe_20210825_150349',
+#                 'pumpprobe_20210827_115857',
+#                 'pumpprobe_20211206_165435',
+#                 'pumpprobe_20220124_163157',
+#                 'pumpprobe_20220331_114306',
+#                 'pumpprobe_20220405_110704',
+#                 'pumpprobe_20220929_151408',
+#                 'pumpprobe_20230222_165630',
+#                 'pumpprobe_20230304_112842',
+#                 'pumpprobe_20230317_174524',
+#                 ]
 
 param_props:
   update:

@@ -33,7 +33,7 @@ def main(param_name, folder_name=None, extra_train_steps=None, prune_frac=None):
         full_path = Path(__file__).parent.resolve()
         if run_type == 'new':
             save_folder = full_path / 'trained_models' / param_name.stem / current_date
-            os.makedirs(save_folder)
+            os.makedirs(save_folder, exist_ok=True)
         else:
             save_folder = full_path / 'trained_models' / param_name.stem / folder_name
 
@@ -44,6 +44,7 @@ def main(param_name, folder_name=None, extra_train_steps=None, prune_frac=None):
         run_type_append = ''
 
         if cpu_id == 0:
+            print('Submitting slurm jobs')
             # these commands need to end with a " to complement the leading " in the run command
             if run_type == 'new':
                 fit_model_command = 'run_inference.' + run_params['fit_file'] + '(\'' + str(param_name) + '\',\'' + str(save_folder) + '\')\"'
@@ -71,7 +72,7 @@ def main(param_name, folder_name=None, extra_train_steps=None, prune_frac=None):
                            'export MKL_NUM_THREADS=' + str(cpus_per_task),
                            'export OPENBLAS_NUM_THREADS=' + str(cpus_per_task),
                            'export OMP_NUM_THREADS=' + str(cpus_per_task),
-                           'srun python -uc \"import run_inference; ' + fit_model_command,
+                           '/home/wmai/miniconda/envs/Perturb_conn/bin/mpiexec -n 80 python -uc \"import run_inference; ' + fit_model_command,
                            ]
 
             slurm_fit.sbatch('\n'.join(run_command))

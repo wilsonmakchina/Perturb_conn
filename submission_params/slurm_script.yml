@@ -1,10 +1,10 @@
 fit_file: fit_experimental
 
-slurm: {'nodes': 1,
-  partition: "himem-share",
-  'ntasks_per_node': 40,
+slurm: {'nodes': 2,
+  'partition': "cpu-share",
   'cpus_per_task': 1,
-  'mem_per_cpu': '10G',
+  'mem_per_cpu': '2G',
+  'ntasks': 80,
   }
 
 
@@ -44,7 +44,9 @@ param_props:
     dynamics_cov: diag # [diag, full]
     emissions_cov: diag # [diag, full]
 
-plot_figures: False
+permute_mask: True # permute the mask 
+random_seed: 0
+plot_figures: True
 model_save_folder: trained_models
 
 

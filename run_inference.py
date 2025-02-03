@@ -115,6 +115,8 @@ def fit_experimental(param_name, save_folder):
     comm = pkl5.Intracomm(MPI.COMM_WORLD)
     size = comm.Get_size()
     cpu_id = comm.Get_rank()
+    if cpu_id == 1:
+        print('cpu_id:', cpu_id, 'size:', size)
 
     run_params = lu.get_run_params(param_name=param_name)
 
