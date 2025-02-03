@@ -1,15 +1,15 @@
 fit_file: fit_experimental
 
-slurm: {'nodes': 1,
-	'ntasks_per_node': 40,
-	'cpus_per_task': 1,
-	'mem': '60G',
-	'time': '10:00:00',
-	'mail_type': 'all',
-	'mail_user': <your_email>
-	}
+slurm: {'nodes': 2,
+  'partition': "cpu-share",
+  'cpus_per_task': 1,
+  'mem_per_cpu': '2G',
+  'ntasks': 80,
+  }
 
-data_path: <path_to_data>
+
+
+data_path: /home/wmai/Perturb_conn/preprocessed_data_creamer/2025_creamer_lds
 num_data_sets: 80 # number of data sets to include. randi data has 110 so this leaves 30 for cross validation
 num_train_steps: 200 # number of steps of EM
 dynamics_lags: 1 # allows the dynamical system to fit weights for multiple time steps in the past. Note that this increases memory and time required by a factor of at least lags^2
@@ -26,6 +26,7 @@ use_memmap: False # allows storing of the matricies on scratch space. Significan
 # cut out the first minute to let the system equilibrate
 start_index: 120
 
+hold_out: 'worm'
 held_out_data: [] # allows you to specify specific data sets to hold out
 
 param_props:
@@ -38,12 +39,14 @@ param_props:
     emissions_cov: True
 
   shape:
-    dynamics_weights: synaptic # [synaptic, full] synaptic constrains to the connectome
+    dynamics_weights: full # [synaptic, full] synaptic constrains to the connectome
     dynamics_input_weights: diag # [diag, full]
     dynamics_cov: diag # [diag, full]
     emissions_cov: diag # [diag, full]
 
-plot_figures: False
+permute_mask: False # permute the mask 
+random_seed: 0
+plot_figures: True
 model_save_folder: trained_models
 
 
