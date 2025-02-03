@@ -39,12 +39,12 @@ param_props:
     emissions_cov: True
 
   shape:
-    dynamics_weights: synaptic # [synaptic, full] synaptic constrains to the connectome
+    dynamics_weights: full # [synaptic, full] synaptic constrains to the connectome
     dynamics_input_weights: diag # [diag, full]
     dynamics_cov: diag # [diag, full]
     emissions_cov: diag # [diag, full]
 
-permute_mask: True # permute the mask 
+permute_mask: False # permute the mask 
 random_seed: 0
 plot_figures: True
 model_save_folder: trained_models
