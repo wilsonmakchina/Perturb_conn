@@ -3,4 +3,3 @@
 # Except this file
 !.gitignore
 !syn_test.yml
-!slurm_script.yml
